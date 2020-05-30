@@ -11,7 +11,7 @@ from .api import Api
 api_v1 = Api(
     title='HashChain APIs',
     version='0.1.0',
-    doc='/doc',
+    # doc='/doc',
     description='It is a [real-life example Web services for <strong>HashChain</strong> implementation '
                 'using Flask-RESTx] <style>.swagger-ui section.models.is-open {display: none !important}</style>',
 )

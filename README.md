@@ -10,7 +10,7 @@ The goals that were achived in this boilerplate:
 * Permissions are handled (and automaticaly documented);
 * Extensive testing with good code coverage.
 
-![Flask RESTx QLDB APIs](https://raw.githubusercontent.com/frol/flask-restplus-server-example/master/docs/static/Flask_RESTplus_Example_API.png)
+![Flask RESTx QLDB APIs](https://raw.githubusercontent.com/sajib-hassan/flask-qldb-boilerplate/master/docs/static/hash-chain-apis.png)
 
 
 Project Structure
