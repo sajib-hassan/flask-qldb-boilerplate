@@ -1,0 +1,3 @@
+FLASK_APP = 'manage.py'
+FLASK_ENV = 'production'
+FLASK_DEBUG = False  # Do not use debug mode in production

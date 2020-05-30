@@ -1,0 +1,108 @@
+import os
+
+
+class BaseConfig(object):
+    PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+    PROJECT_INSTANCE_DIR = os.path.join(PROJECT_ROOT, 'instance')
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+    # python3 -c 'import os; print(os.urandom(32).hex())'
+    SECRET_KEY = os.getenv('SECRET_KEY', 'fa5c48506e4e50ea4923691ec1cb942a2b8580320e488506dda5add4b6b8332f')
+
+    BCRYPT_LOG_ROUNDS = 4
+    TOKEN_EXPIRE_HOURS = 0
+    TOKEN_EXPIRE_MINUTES = 0
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
+    SWAGGER_UI_DOC_EXPANSION = "list"
+    RESTX_MASK_SWAGGER = False
+    JSON_SORT_KEYS = False
+
+    # @property
+    # def DATABASE_URI(self):  # Note: all caps
+    #     return 'mysql://user@{}/foo'.format(self.DB_SERVER)
+
+    # POSTGRESQL
+    # DB_USER = 'user'
+    # DB_PASSWORD = 'password'
+    # DB_NAME = 'restplusdb'
+    # DB_HOST = 'localhost'
+    # DB_PORT = 5432
+    # SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{password}@{host}:{port}/{name}'.format(
+    #     user=DB_USER,
+    #     password=DB_PASSWORD,
+    #     host=DB_HOST,
+    #     port=DB_PORT,
+    #     name=DB_NAME,
+    # )
+
+    # SQLITE
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///%s' % (os.path.join(PROJECT_INSTANCE_DIR, "hash_chain_dev.db"))
+
+    DEBUG = False
+    ERROR_404_HELP = False
+
+    REVERSE_PROXY_SETUP = os.getenv('EXAMPLE_API_REVERSE_PROXY_SETUP', False)
+
+    AUTHORIZATIONS = {
+        'jwt_token': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "Type in the *'Value'* input box below: **'Bearer &lt;JWT&gt;'**, where JWT is the token"
+        },
+
+        # 'oauth2_password': {
+        #     'type': 'oauth2',
+        #     'flow': 'password',
+        #     'scopes': {},
+        #     'tokenUrl': '/auth/oauth2/token',
+        # },
+        # TODO: implement other grant types for third-party apps
+        # 'oauth2_implicit': {
+        #    'type': 'oauth2',
+        #    'flow': 'implicit',
+        #    'scopes': {},
+        #    'authorizationUrl': '/auth/oauth2/authorize',
+        # },
+    }
+
+    ENABLED_MODULES = (
+        'auth',
+        'users',
+        # 'teams',
+        'api',
+    )
+
+    # TODO: consider if these are relevant for this project
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+
+class ProductionConfig(BaseConfig):
+    TOKEN_EXPIRE_HOURS = 1
+    BCRYPT_LOG_ROUNDS = 13
+    SECRET_KEY = os.getenv('EXAMPLE_API_SERVER_SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('EXAMPLE_API_SERVER_SQLALCHEMY_DATABASE_URI')
+
+
+class DevelopmentConfig(BaseConfig):
+    TOKEN_EXPIRE_MINUTES = 15
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BaseConfig.PROJECT_INSTANCE_DIR, 'hash_chain_dev.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = True
+
+
+class StagingConfig(BaseConfig):
+    DEBUG = False
+    # uncomment the line below to use postgres
+    # SQLALCHEMY_DATABASE_URI = postgres_local_base
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BaseConfig.PROJECT_INSTANCE_DIR, 'hash_chain_stg.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+class TestingConfig(BaseConfig):
+    DEBUG = True
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BaseConfig.PROJECT_INSTANCE_DIR, 'hash_chain_test.db')
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
