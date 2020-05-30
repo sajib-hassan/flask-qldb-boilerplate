@@ -68,6 +68,11 @@ def get_version():
     return VERSION_RE.search(init).group(1)
 
 
+try:
+    os.makedirs(os.path.join(ROOT, 'instance'))
+except OSError:
+    pass
+
 setup(
     name="flask-qldb-boilerplate",
     description=DESCRIPTION,

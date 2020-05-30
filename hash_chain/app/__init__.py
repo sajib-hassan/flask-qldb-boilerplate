@@ -51,11 +51,15 @@ def create_app(flask_config_name=None, **kwargs):
             sys.exit(1)
         raise
 
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.config.get('PROJECT_INSTANCE_DIR'))
+    except OSError:
+        pass
+
     if app.config['REVERSE_PROXY_SETUP']:
         app.wsgi_app = ProxyFix(app.wsgi_app)
 
-    app.config['SWAGGER_DEFAULT_MODELS_EXPAND_DEPTH'] = -1
-    app.config['DEFAULT_MODELS_EXPAND_DEPTH'] = -1
 
     with app.app_context():
         from . import extensions

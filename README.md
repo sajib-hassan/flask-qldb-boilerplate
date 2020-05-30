@@ -10,7 +10,7 @@ The goals that were achived in this boilerplate:
 * Permissions are handled (and automaticaly documented);
 * Extensive testing with good code coverage.
 
-![Flask RESTx QLDB APIs](https://raw.githubusercontent.com/sajib-hassan/flask-qldb-boilerplate/master/static/hash-chain-apis.png)
+![Flask RESTx QLDB APIs](https://raw.githubusercontent.com/sajib-hassan/flask-qldb-boilerplate/master/docs/static/hash-chain-apis.png)
 
 
 Project Structure
@@ -305,9 +305,9 @@ $ make tests
     user by public_id requires just a regular authentication.
 
 ### Inspiration from
-[flask-restplus-server-example](https://github.com/frol/flask-restplus-server-example)
-[flask-restplus-boilerplate](https://github.com/cosmic-byte/flask-restplus-boilerplate)
-[exploreflask.com](http://exploreflask.com/en/latest/)
+* [flask-restplus-server-example](https://github.com/frol/flask-restplus-server-example)
+* [flask-restplus-boilerplate](https://github.com/cosmic-byte/flask-restplus-boilerplate)
+* [exploreflask.com](http://exploreflask.com/en/latest/)
 
 ### Contributing
 If you want to contribute to this flask QLDB boilerplate, clone the repository and just start making pull requests.
