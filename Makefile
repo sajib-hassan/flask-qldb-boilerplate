@@ -22,8 +22,8 @@ db-migrate:
 db-upgrade:
 	python3 manage.py db upgrade
 
-seed-admin:
-	python3 manage.py seed_admin
+seed-users:
+	python3 manage.py seed_users
 
 install: system-packages python-packages python-setup db-init db-migrate db-upgrade
 

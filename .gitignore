@@ -130,6 +130,10 @@ dmypy.json
 
 # Flask ENV
 .flaskenv
+
+
 config.py
 local_config.py
 .idea/
+*.db
+migrations/*
