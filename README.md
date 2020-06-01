@@ -3,7 +3,7 @@ Flask API wrapper of AWS QLDB - RESTx Boilerplate
 
 The goals that were achived in this boilerplate:
 
-* RESTful API server should be self-documented using OpenAPI (fka Swagger)
+* RESTx API server should be self-documented using OpenAPI (fka Swagger)
   specifications, so interactive documentation UI is in place;
 * Authentication is handled with JWT for first-party clients makes it usable
   not only for third-party "external" apps;
@@ -20,8 +20,8 @@ Project Structure
 
 Folders:
 
-* `hash_chain\app` - This RESTful API wrapper of AWS QLDB implementation is here.
-* `hash_chain\tests` - These are [unittest](https://docs.python.org/3/library/unittest.html) tests for this RESTful API 
+* `hash_chain\app` - This RESTx API wrapper of AWS QLDB implementation is here.
+* `hash_chain\tests` - These are [unittest](https://docs.python.org/3/library/unittest.html) tests for this RESTx API 
 wrapper of AWS QLDB implementation.
 * `migrations` - Database migrations are stored here.
 
@@ -31,7 +31,7 @@ Files:
 * `.flaskenv.sample` - Flask Config for environment variables, you have to copy this file and rename to `.flaskenv`.
 * `.gitignore` - Lists files and file masks of the files which should not be
   added to git repository.
-* `config.py.sample` - This is a config file of this RESTful API wrapper of AWS QLDB implementation. You have to copy 
+* `config.py.sample` - This is a config file of this RESTx API wrapper of AWS QLDB implementation. You have to copy 
 this file and rename to `config.py`.
 * `local_config.py.sample` - The local environment config file that will overwrite `DevelopmentConfig`. You have to copy 
 this file and rename to `local_config.py`.
@@ -104,7 +104,7 @@ hash_chain/
 
 ```
 
-* `app/__init__.py` - The entrypoint to this RESTful API Server example
+* `app/__init__.py` - The entrypoint to this RESTx API Server example
   application (Flask application is created here).
 * `app/extensions` - All extensions (e.g. SQLAlchemy, flask_qldb, app_config) are initialized
   here and can be used in the application by importing as, for example,
@@ -252,7 +252,7 @@ $ python3 manage.py db upgrade
 
 ```
 
-#### Create admin user
+#### Create users
 * Admin user email `joe_admin@gmail.com` with password `admin`
 * Regular user email `joe@gmail.com` with password `user`
 

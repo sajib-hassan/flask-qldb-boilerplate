@@ -14,10 +14,8 @@ CONFIG_NAME_MAPPER = {
 
 def create_app(flask_config_name=None, **kwargs):
     """
-    Entry point to the Flask RESTful Server application.
+    Entry point to the Flask RESTx Server application.
     """
-    # This is a workaround for Alpine Linux (musl libc) quirk:
-    # https://github.com/docker-library/python/issues/211
     import threading
     threading.stack_size(2 * 1024 * 1024)
 

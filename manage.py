@@ -25,7 +25,11 @@ def add_user_from_cli(data):
         error = f"Error: {data['email']} is already registered"
         click.secho(f"{error}\n", fg="red", bold=True)
         return 1
-    new_user = User(data)
+    new_user = User(
+        email=data['email'],
+        username=data['username'],
+        password=data['password'],
+        admin=data['admin'])
     db.session.add(new_user)
     db.session.commit()
     user_type = "admin user" if data["admin"] else "user"
@@ -53,7 +57,7 @@ def test():
 @manager.option('-a', '--admin', dest='admin', default=True)
 @manager.option('-u', '--username', dest='username', default=None)
 def add_admin(email, password, admin, username):
-    add_user_from_cli(email=email, password=password, admin=admin, username=username)
+    add_user_from_cli(dict(email=email, password=password, admin=admin, username=username))
 
 
 @manager.command

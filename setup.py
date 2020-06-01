@@ -14,9 +14,9 @@ README = (APP_ROOT / "README.md").read_text()
 AUTHOR = "Sajib Hassan"
 AUTHOR_EMAIL = "sajib.hassan@gmail.com"
 PROJECT_URLS = {
-    "Documentation": "https://aaronluna.dev/series/flask-api-tutorial/",
-    "Bug Tracker": "https://github.com/a-luna/flask-api-tutorial/issues",
-    "Source Code": "https://github.com/a-luna/flask-api-tutorial",
+    "Documentation": "https://github.com/sajib-hassan/flask-qldb-boilerplate",
+    "Bug Tracker": "https://github.com/sajib-hassan/flask-qldb-boilerplate/issues",
+    "Source Code": "https://github.com/sajib-hassan/flask-qldb-boilerplate",
 }
 INSTALL_REQUIRES = [
     "alembic==1.4.2",
@@ -84,7 +84,7 @@ setup(
     maintainer=AUTHOR,
     maintainer_email=AUTHOR_EMAIL,
     license="MIT",
-    url="https://github.com/a-luna/flask-api-tutorial",
+    url="https://github.com/sajib-hassan/flask-qldb-boilerplate",
     project_urls=PROJECT_URLS,
     packages=find_packages(),
     python_requires=">=3.6",
