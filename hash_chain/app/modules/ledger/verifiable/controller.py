@@ -13,7 +13,6 @@ _digest_result = VerifiableDto.digest_result
 _verify_block = VerifiableDto.verify_block
 
 
-
 @api.route('/digest')
 class DigestResult(Resource):
     """Handles HTTP requests to URL: /api/v1/ledger/verifiable/digest."""
@@ -50,4 +49,3 @@ class VerifyBlock(Resource):
     def get(self):
         """Get a journal block from a QLDB ledger."""
         return VerifiableServices().verify_block()
-

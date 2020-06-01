@@ -1,4 +1,3 @@
-
 from json import dumps as json_dumps
 from logging import getLogger
 

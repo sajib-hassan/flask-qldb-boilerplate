@@ -1,4 +1,3 @@
-
 import time
 from functools import reduce
 from sys import argv
@@ -6,10 +5,10 @@ from sys import argv
 from boto3 import client, resource
 
 from hash_chain.app.extensions import logger
+from hash_chain.app.extensions.app_config import config
 from hash_chain.app.modules.ledger.core.export_journal import create_s3_bucket_if_not_exists, \
     create_export_and_wait_for_completion, set_up_s3_encryption_configuration, describe_journal_export
 from hash_chain.app.modules.ledger.core.verifier import join_hash_pairwise
-from hash_chain.app.extensions.app_config import config
 
 
 def create_journal_export():

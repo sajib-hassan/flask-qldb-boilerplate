@@ -24,4 +24,3 @@ def insert_documents(transaction_executor, table_name, documents):
     list_of_document_ids = get_document_ids_from_dml_results(cursor)
 
     return list_of_document_ids
-

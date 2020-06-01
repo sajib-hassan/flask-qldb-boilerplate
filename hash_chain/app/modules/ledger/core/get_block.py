@@ -1,10 +1,10 @@
 from hash_chain.app.extensions import logger
+from hash_chain.app.extensions.app_config import config
 from hash_chain.app.extensions.flask_qldb import qldb_client
 from hash_chain.app.modules.ledger.core.block_address import block_address_to_dictionary
 from hash_chain.app.modules.ledger.core.qldb_string_utils import block_response_to_string, value_holder_to_string, \
     digest_response_to_string
 from hash_chain.app.modules.ledger.core.verifier import verify_document, flip_random_bit, to_base_64, parse_block
-from hash_chain.app.extensions.app_config import config
 
 
 def get_digest_result(ledger_name=config.LEDGER_NAME):
@@ -21,6 +21,7 @@ def get_digest_result(ledger_name=config.LEDGER_NAME):
     result = qldb_client.get_digest(Name=ledger_name)
     logger.info('Success. LedgerDigest: {}.'.format(digest_response_to_string(result)))
     return result
+
 
 def get_block(ledger_name, block_address):
     """
@@ -124,6 +125,3 @@ def verify_block(ledger_name, block_address):
     except Exception as e:
         logger.exception('Failed to verify blocks in the ledger with name={}.'.format(ledger_name))
         raise e
-
-
-

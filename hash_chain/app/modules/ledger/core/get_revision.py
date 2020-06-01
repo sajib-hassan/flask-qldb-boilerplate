@@ -1,9 +1,6 @@
 from hash_chain.app.extensions import logger
 from hash_chain.app.extensions.flask_qldb import qldb_client
-from hash_chain.app.modules.ledger.core.get_block import get_digest_result
-from hash_chain.app.modules.ledger.core.qldb_string_utils import value_holder_to_string
 from hash_chain.app.modules.ledger.core.utils import convert_object_to_ion
-from hash_chain.app.modules.ledger.core.verifier import to_base_64
 
 
 def get_revision(ledger_name, document_id, block_address, digest_tip_address):
@@ -49,4 +46,3 @@ def query_revision_history(qldb_session, table_name, condition_str, condition_va
     parameters = convert_object_to_ion(condition_value)
     cursor = qldb_session.execute_statement(query, parameters)
     return cursor
-

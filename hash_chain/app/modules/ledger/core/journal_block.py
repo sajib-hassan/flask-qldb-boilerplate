@@ -1,4 +1,3 @@
-
 class JournalBlock:
     """
     Represents a JournalBlock that was recorded after executing a transaction in the ledger.

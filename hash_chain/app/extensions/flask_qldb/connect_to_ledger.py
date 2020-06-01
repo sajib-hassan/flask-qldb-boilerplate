@@ -39,5 +39,3 @@ def create_qldb_session(ledger_name=config.LEDGER_NAME):
     pooled_qldb_driver = create_qldb_driver(ledger_name)
     qldb_session = pooled_qldb_driver.get_session()
     return qldb_session
-
-

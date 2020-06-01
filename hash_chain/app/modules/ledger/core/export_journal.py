@@ -5,8 +5,8 @@ from boto3 import client
 from botocore.exceptions import ClientError
 
 from hash_chain.app.extensions import logger
-from hash_chain.app.extensions.flask_qldb import qldb_client
 from hash_chain.app.extensions.app_config import config
+from hash_chain.app.extensions.flask_qldb import qldb_client
 
 MAX_RETRY_COUNT = 40
 EXPORT_COMPLETION_POLL_PERIOD_SEC = 10
@@ -38,6 +38,7 @@ EXPORT_ROLE_KMS_STATEMENT_TEMPLATE = """{
                                         "Action": ["kms:GenerateDataKey"],
                                         "Resource": "{kms_arn}"
                                     }"""
+
 
 def describe_journal_export(ledger_name, export_id):
     """
@@ -273,7 +274,6 @@ def create_export(ledger_name, start_time, end_time, s3_bucket_name, s3_prefix, 
         logger.error("The eventually consistent behavior of the IAM service may cause this export to fail its first"
                      " attempts, please retry.")
         raise ipe
-
 
 # if __name__ == '__main__':
 #     """

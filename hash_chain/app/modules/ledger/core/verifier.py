@@ -1,4 +1,3 @@
-
 from array import array
 from base64 import b64encode
 from functools import reduce

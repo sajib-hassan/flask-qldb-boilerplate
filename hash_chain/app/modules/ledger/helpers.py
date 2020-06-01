@@ -3,8 +3,8 @@ from time import sleep
 from flask import request
 
 from hash_chain.app.extensions import logger
-from hash_chain.app.extensions.flask_qldb import qldb_client
 from hash_chain.app.extensions.app_config import config
+from hash_chain.app.extensions.flask_qldb import qldb_client
 
 
 def get_requested_data(self):
@@ -12,6 +12,7 @@ def get_requested_data(self):
     if "ledger_name" in data and not data["ledger_name"].strip():
         data["ledger_name"] = config.LEDGER_NAME
     return data
+
 
 def describe_ledger(ledger_name):
     logger.info('describe ledger with name: {}.'.format(ledger_name))

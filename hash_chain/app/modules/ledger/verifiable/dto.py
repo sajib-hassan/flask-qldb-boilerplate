@@ -6,7 +6,8 @@ from hash_chain.app.extensions.app_config import config
 class VerifiableDto:
     api = Namespace('verifiable', description='Ledger data verification related operations')
     digest = api.model('digest', {
-        'ledger_name': fields.String(required=False, description='Valid ledger name on QLDB', default=config.LEDGER_NAME),
+        'ledger_name': fields.String(required=False, description='Valid ledger name on QLDB',
+                                     default=config.LEDGER_NAME),
     })
 
     digest_result = api.model('digest_result', {
@@ -21,6 +22,3 @@ class VerifiableDto:
         'condition_str': fields.String(required=True, description='condition string "Condition = ?"'),
         'condition_value': fields.String(required=True, description='condition value'),
     })
-
-
-

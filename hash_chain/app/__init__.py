@@ -7,6 +7,7 @@ from werkzeug.contrib.fixers import ProxyFix
 CONFIG_NAME_MAPPER = {
     'development': 'config.DevelopmentConfig',
     'testing': 'config.TestingConfig',
+    'staging': 'config.StagingConfig',
     'production': 'config.ProductionConfig',
     'local': 'local_config.LocalConfig',
 }
@@ -43,8 +44,8 @@ def create_app(flask_config_name=None, **kwargs):
             app.logger.error(
                 "You have to have `local_config.py` or `local_config/__init__.py` in order to use "
                 "the default 'local' Flask Config. Alternatively, you may set `FLASK_CONFIG` "
-                "environment variable to one of the following options: development, production, "
-                "testing."
+                "environment variable to one of the following options: `development`, `production`, "
+                "`staging`, `testing` after copied `config.py.sample` to `config.py`"
             )
             sys.exit(1)
         raise
@@ -58,7 +59,6 @@ def create_app(flask_config_name=None, **kwargs):
     if app.config['REVERSE_PROXY_SETUP']:
         app.wsgi_app = ProxyFix(app.wsgi_app)
 
-
     with app.app_context():
         from . import extensions
         extensions.init_app(app)
@@ -67,5 +67,3 @@ def create_app(flask_config_name=None, **kwargs):
         modules.init_app(app)
 
     return app
-
-

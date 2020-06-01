@@ -39,8 +39,9 @@ class DdlServices(object):
         try:
             data = get_requested_data()
             with create_qldb_session(data["ledger_name"]) as session:
-                session.execute_lambda(lambda x: self._create_table_index(x, data["table_name"], data["index_attribute"]),
-                                       lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
+                session.execute_lambda(
+                    lambda x: self._create_table_index(x, data["table_name"], data["index_attribute"]),
+                    lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
                 logger.info('Index created successfully.')
                 return success_response('Index created successfully.', HTTPStatus.CREATED)
         except Exception:

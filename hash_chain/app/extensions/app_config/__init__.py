@@ -7,7 +7,9 @@ class Config(object):
             raise AttributeError("'Application Config' object has no attribute '%s'" % name)
         return current_app.config.get(name)
 
+
 config = Config()
+
 
 def init_app(app, **kwargs):
     pass

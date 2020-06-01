@@ -6,7 +6,8 @@ from hash_chain.app.extensions.app_config import config
 class DdlDto:
     api = Namespace('ddl', description='Ledger related operations')
     ledger_create = api.model('ledger_create', {
-        'ledger_name': fields.String(required=False, description='Valid ledger name on QLDB', default=f"{config.LEDGER_NAME}"),
+        'ledger_name': fields.String(required=False, description='Valid ledger name on QLDB',
+                                     default=f"{config.LEDGER_NAME}"),
     })
 
     table_create = api.clone('table_create', ledger_create, {
