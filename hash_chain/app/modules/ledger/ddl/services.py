@@ -16,6 +16,7 @@ class DdlServices(object):
         try:
             DdlServices._create_ledger(ledger_name)
             wait_for_active(ledger_name)
+            DdlServices.reset_ledgers()
             return success_response('Ledger is active and ready to use.', HTTPStatus.CREATED)
         except Exception as e:
             logger.exception('Unable to create the ledger!')
@@ -71,10 +72,15 @@ class DdlServices(object):
             set_deletion_protection(ledger_name, False)
             DdlServices._delete_ledger(ledger_name)
             wait_for_deleted(ledger_name)
+            DdlServices.reset_ledgers()
             return success_response('The ledger is successfully deleted.', HTTPStatus.ACCEPTED)
         except Exception as e:
             logger.exception('Unable to delete the ledger.')
             return fail_response('Unable to delete the ledger. Please try again.', HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    @staticmethod
+    def reset_ledgers():
+        DdlServices.ledgers = None
 
     @staticmethod
     def list_tables(ledger_name):
