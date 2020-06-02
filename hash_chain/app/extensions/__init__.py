@@ -9,13 +9,17 @@ Please, put new extension instantiations and initializations here.
 """
 from .logging import Logging
 
-logger = Logging()
+logging = Logging()
 
 from .flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-from . import api, flask_qldb, flask_bcrypt, app_config
+from .flask_qldb import FlaskQldb
+
+qldb = FlaskQldb()
+
+from . import api, flask_bcrypt, app_config
 
 
 def init_app(app):
@@ -23,11 +27,11 @@ def init_app(app):
     Application extensions initialization.
     """
     for extension in (
-            logger,
-            db,
             flask_bcrypt,
+            app_config,
+            logging,
             api,
-            flask_qldb,
-            app_config
+            db,
+            qldb,
     ):
         extension.init_app(app)

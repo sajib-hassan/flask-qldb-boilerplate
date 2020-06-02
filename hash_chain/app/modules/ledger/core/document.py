@@ -1,4 +1,4 @@
-from hash_chain.app.extensions import logger
+from hash_chain.app.extensions.logging import logger
 from hash_chain.app.modules.ledger.core.utils import convert_object_to_ion, get_document_ids_from_dml_results
 
 

@@ -2,7 +2,7 @@ from amazon.ion.simple_types import IonPyBool, IonPyBytes, IonPyDecimal, IonPyDi
     IonPyNull, IonPySymbol, IonPyText, IonPyTimestamp
 from amazon.ion.simpleion import dumps, loads
 
-from hash_chain.app.extensions import logger
+from hash_chain.app.extensions.logging import logger
 
 IonValue = (IonPyBool, IonPyBytes, IonPyDecimal, IonPyDict, IonPyFloat, IonPyInt, IonPyList, IonPyNull, IonPySymbol,
             IonPyText, IonPyTimestamp)

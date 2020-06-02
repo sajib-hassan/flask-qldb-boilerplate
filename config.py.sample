@@ -9,6 +9,10 @@ class BaseConfig(object):
     # python3 -c 'import os; print(os.urandom(32).hex())'
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
 
+    AWS_REGION = 'aws_region'
+    AWS_ACCESS_KEY_ID = 'aws_access_key_id'
+    AWS_SECRET_ACCESS_KEY = 'aws_secret_access_key'
+
     BCRYPT_LOG_ROUNDS = 4
     TOKEN_EXPIRE_HOURS = 0
     TOKEN_EXPIRE_MINUTES = 0
@@ -105,9 +109,11 @@ class ProductionConfig(BaseConfig):
 
 
 class DevelopmentConfig(BaseConfig):
-    TOKEN_EXPIRE_MINUTES = 15
+    TOKEN_EXPIRE_HOURS = 3
+    TOKEN_EXPIRE_MINUTES = 30
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BaseConfig.PROJECT_INSTANCE_DIR, 'hash_chain_dev.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SEND_FILE_MAX_AGE_DEFAULT=0
     DEBUG = True
 
 

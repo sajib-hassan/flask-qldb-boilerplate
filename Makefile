@@ -3,6 +3,9 @@
 clean:
 	find . -type f -name '*.pyc' -delete
 	find . -type f -name '*.log' -delete
+	rm -rf instance/*
+	rm -rf migrations
+	rm -rf flask_qldb_boilerplate.egg-info
 
 system-packages:
 	#sudo apt install python-pip -y
@@ -25,7 +28,7 @@ db-upgrade:
 seed-users:
 	python3 manage.py seed_users
 
-install: system-packages python-packages python-setup db-init db-migrate db-upgrade
+install: clean system-packages python-packages python-setup db-init db-migrate db-upgrade seed-users
 
 tests:
 	python3 manage.py test

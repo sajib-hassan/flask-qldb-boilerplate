@@ -1,6 +1,6 @@
-from hash_chain.app.extensions import logger
+from hash_chain.app.extensions import qldb
 from hash_chain.app.extensions.app_config import config
-from hash_chain.app.extensions.flask_qldb import qldb_client
+from hash_chain.app.extensions.logging import logger
 from hash_chain.app.modules.ledger.core.block_address import block_address_to_dictionary
 from hash_chain.app.modules.ledger.core.qldb_string_utils import block_response_to_string, value_holder_to_string, \
     digest_response_to_string
@@ -18,7 +18,7 @@ def get_digest_result(ledger_name=config.LEDGER_NAME):
     :return: The digest in a 256-bit hash value and a block address.
     """
     logger.info("Let's get the current digest of the ledger named {}".format(ledger_name))
-    result = qldb_client.get_digest(Name=ledger_name)
+    result = qldb.client().get_digest(Name=ledger_name)
     logger.info('Success. LedgerDigest: {}.'.format(digest_response_to_string(result)))
     return result
 
@@ -37,7 +37,7 @@ def get_block(ledger_name, block_address):
     :return: The response of the request.
     """
     logger.info("Let's get the block for block address {} of the ledger named {}.".format(block_address, ledger_name))
-    result = qldb_client.get_block(Name=ledger_name, BlockAddress=block_address)
+    result = qldb.client().get_block(Name=ledger_name, BlockAddress=block_address)
     logger.info('Success. GetBlock: {}'.format(block_response_to_string(result)))
     return result
 
@@ -60,8 +60,8 @@ def get_block_with_proof(ledger_name, block_address, digest_tip_address):
     """
     logger.info("Let's get the block for block address {}, digest tip address {}, for the ledger named {}.".format(
         block_address, digest_tip_address, ledger_name))
-    result = qldb_client.get_block(Name=ledger_name, BlockAddress=block_address,
-                                   DigestTipAddress=digest_tip_address)
+    result = qldb.client().get_block(Name=ledger_name, BlockAddress=block_address,
+                                     DigestTipAddress=digest_tip_address)
     logger.info('Success. GetBlock: {}.'.format(block_response_to_string(result)))
     return result
 

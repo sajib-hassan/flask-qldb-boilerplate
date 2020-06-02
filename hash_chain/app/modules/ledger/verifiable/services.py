@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
-from hash_chain.app.extensions import logger
-from hash_chain.app.extensions.flask_qldb.connect_to_ledger import create_qldb_session
+from hash_chain.app.extensions import qldb
+from hash_chain.app.extensions.logging import logger
 from hash_chain.app.modules.ledger.core.get_block import get_digest_result, verify_block
 from hash_chain.app.modules.ledger.core.get_revision import query_revision_history
 from hash_chain.app.modules.ledger.helpers import get_requested_data
@@ -28,7 +28,7 @@ class VerifiableServices(object):
         """
         try:
             data = get_requested_data()
-            with create_qldb_session(data["ledger_name"]) as session:
+            with qldb.session(data["ledger_name"]) as session:
                 cursor = session.execute_lambda(lambda executor: query_revision_history(executor,
                                                                                         data["table_name"],
                                                                                         data["condition_str"],

@@ -2,12 +2,12 @@ from time import sleep
 
 from flask import request
 
-from hash_chain.app.extensions import logger
+from hash_chain.app.extensions import qldb
 from hash_chain.app.extensions.app_config import config
-from hash_chain.app.extensions.flask_qldb import qldb_client
+from hash_chain.app.extensions.logging import logger
 
 
-def get_requested_data(self):
+def get_requested_data():
     data = request.json
     if "ledger_name" in data and not data["ledger_name"].strip():
         data["ledger_name"] = config.LEDGER_NAME
@@ -16,7 +16,7 @@ def get_requested_data(self):
 
 def describe_ledger(ledger_name):
     logger.info('describe ledger with name: {}.'.format(ledger_name))
-    result = qldb_client.describe_ledger(Name=ledger_name)
+    result = qldb.client().describe_ledger(Name=ledger_name)
     result.pop('ResponseMetadata')
     logger.info('Success. Ledger description: {}.'.format(result))
     return result
@@ -37,7 +37,7 @@ def set_deletion_protection(ledger_name, deletion_protection):
     """
     logger.info("Let's set deletion protection to {} for the ledger with name {}.".format(deletion_protection,
                                                                                           ledger_name))
-    result = qldb_client.update_ledger(Name=ledger_name, DeletionProtection=deletion_protection)
+    result = qldb.client().update_ledger(Name=ledger_name, DeletionProtection=deletion_protection)
     logger.info('Success. Ledger updated: {}'.format(result))
 
 
@@ -58,6 +58,6 @@ def wait_for_deleted(self, ledger_name):
             describe_ledger(ledger_name)
             logger.info('The ledger is still being deleted. Please wait...')
             sleep(config.LEDGER_DELETION_POLL_PERIOD_SEC)
-        except qldb_client.exceptions.ResourceNotFoundException:
+        except qldb.client().exceptions.ResourceNotFoundException:
             logger.info('Success. The ledger is deleted.')
             break

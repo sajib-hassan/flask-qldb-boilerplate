@@ -1,5 +1,5 @@
-from hash_chain.app.extensions import logger
-from hash_chain.app.extensions.flask_qldb import qldb_client
+from hash_chain.app.extensions import qldb
+from hash_chain.app.extensions.logging import logger
 from hash_chain.app.modules.ledger.core.utils import convert_object_to_ion
 
 
@@ -23,8 +23,8 @@ def get_revision(ledger_name, document_id, block_address, digest_tip_address):
     :rtype: dict
     :return: The response of the request.
     """
-    result = qldb_client.get_revision(Name=ledger_name, BlockAddress=block_address, DocumentId=document_id,
-                                      DigestTipAddress=digest_tip_address)
+    result = qldb.client().get_revision(Name=ledger_name, BlockAddress=block_address, DocumentId=document_id,
+                                        DigestTipAddress=digest_tip_address)
     return result
 
 

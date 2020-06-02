@@ -5,6 +5,8 @@ Logging adapter
 """
 import logging
 
+logger = None
+
 
 class Logging(object):
     """
@@ -40,3 +42,9 @@ class Logging(object):
         for hdlr in list(sqla_logger.handlers):
             sqla_logger.removeHandler(hdlr)
         sqla_logger.addHandler(logging.NullHandler())
+
+        global logger
+        log_level = logging.DEBUG if app.debug else logging.INFO
+        logger = logging.getLogger('hash_chain.app')
+        logging.basicConfig(level=log_level)
+

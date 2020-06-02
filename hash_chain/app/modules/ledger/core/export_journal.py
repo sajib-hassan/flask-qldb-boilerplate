@@ -4,9 +4,9 @@ from time import sleep
 from boto3 import client
 from botocore.exceptions import ClientError
 
-from hash_chain.app.extensions import logger
+from hash_chain.app.extensions import qldb
 from hash_chain.app.extensions.app_config import config
-from hash_chain.app.extensions.flask_qldb import qldb_client
+from hash_chain.app.extensions.logging import logger
 
 MAX_RETRY_COUNT = 40
 EXPORT_COMPLETION_POLL_PERIOD_SEC = 10
@@ -55,7 +55,7 @@ def describe_journal_export(ledger_name, export_id):
     """
     logger.info("Let's describe a journal export for ledger with name: {}, exportId: {}.".format(ledger_name,
                                                                                                  export_id))
-    export_result = qldb_client.describe_journal_s3_export(Name=ledger_name, ExportId=export_id)
+    export_result = qldb.client().describe_journal_s3_export(Name=ledger_name, ExportId=export_id)
     logger.info('Export described. Result = {}.'.format(export_result['ExportDescription']))
     return export_result
 
@@ -262,15 +262,16 @@ def create_export(ledger_name, start_time, end_time, s3_bucket_name, s3_prefix, 
     """
     logger.info("Let's create a journal export for ledger with name: {}.".format(ledger_name))
     try:
-        result = qldb_client.export_journal_to_s3(Name=ledger_name, InclusiveStartTime=start_time,
-                                                  ExclusiveEndTime=end_time,
-                                                  S3ExportConfiguration={'Bucket': s3_bucket_name, 'Prefix': s3_prefix,
-                                                                         'EncryptionConfiguration':
-                                                                             encryption_configuration},
-                                                  RoleArn=role_arn)
+        result = qldb.client().export_journal_to_s3(Name=ledger_name, InclusiveStartTime=start_time,
+                                                    ExclusiveEndTime=end_time,
+                                                    S3ExportConfiguration={'Bucket': s3_bucket_name,
+                                                                           'Prefix': s3_prefix,
+                                                                           'EncryptionConfiguration':
+                                                                               encryption_configuration},
+                                                    RoleArn=role_arn)
         logger.info("Requested QLDB to export contents of the journal.")
         return result
-    except qldb_client.exceptions.InvalidParameterException as ipe:
+    except qldb.client().exceptions.InvalidParameterException as ipe:
         logger.error("The eventually consistent behavior of the IAM service may cause this export to fail its first"
                      " attempts, please retry.")
         raise ipe

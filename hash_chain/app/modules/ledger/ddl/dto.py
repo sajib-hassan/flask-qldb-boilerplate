@@ -10,12 +10,15 @@ class DdlDto:
                                      default=f"{config.LEDGER_NAME}"),
     })
 
-    table_create = api.clone('table_create', ledger_create, {
-        'table_name': fields.String(required=True, description='Valid ledger table name'),
+    ledgers = api.model('ledgers', {
+        'name': fields.String(required=True, description='ledger name', attribute='Name'),
+        'state': fields.String(required=True, description='ledger state', attribute="State"),
+        'creation_datetime': fields.DateTime(required=True, description='ledger creation datetime',
+                                             attribute="CreationDateTime"),
     })
 
-    table_index_create = api.clone('table_index_create', table_create, {
-        'index_attribute': fields.String(required=True, description='Valid ledger table\'s index attribute'),
+    ledger = api.clone('ledger', ledgers, {
+        'arn': fields.String(required=True, description='ledger Arn', attribute='Arn'),
+        'deletion_protection': fields.Boolean(required=True, description='ledger deletion protection',
+                                              attribute='DeletionProtection'),
     })
-
-    ledger_delete = api.clone('ledger_delete', ledger_create, {})
