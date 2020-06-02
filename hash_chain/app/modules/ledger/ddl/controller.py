@@ -19,6 +19,24 @@ table_name = table_name_parser_plain()
 table_index_create = table_index_parser_plain()
 
 
+@api.route('/ledgers/all')
+class ListLedgers(Resource):
+    """Handles HTTP requests to URL: /api/v1/ledger/dml/ledgers."""
+
+    @api.doc('List all QLDB ledgers in a given account')
+    @api.doc(security="jwt_token")
+    @admin_token_required
+    @api.marshal_list_with(ledgers, envelope='data')
+    @api.response(int(HTTPStatus.OK), "Found all ledger.")
+    @api.response(int(HTTPStatus.UNAUTHORIZED), "Token is invalid or expired.")
+    @api.response(int(HTTPStatus.BAD_REQUEST), "Validation error.")
+    @api.response(int(HTTPStatus.UNPROCESSABLE_ENTITY), "Unable to create the ledger.")
+    @api.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), "Internal server error.")
+    def get(self):
+        """List all QLDB ledgers in a given account"""
+        return DdlServices.get_ledger_list()
+
+
 @api.route('/ledgers')
 @api.doc(security="jwt_token")
 @api.response(int(HTTPStatus.UNAUTHORIZED), "Token is invalid or expired.")
@@ -26,15 +44,6 @@ table_index_create = table_index_parser_plain()
 @api.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), "Internal server error.")
 class Ledger(Resource):
     """Handles HTTP requests to URL: /api/v1/ledger/ddl/."""
-
-    @api.doc('List all QLDB ledgers in a given account')
-    @admin_token_required
-    @api.marshal_list_with(ledgers, envelope='data')
-    @api.response(int(HTTPStatus.OK), "Found all ledger.")
-    @api.response(int(HTTPStatus.UNPROCESSABLE_ENTITY), "Unable to create the ledger.")
-    def get(self):
-        """List all QLDB ledgers in a given account"""
-        return DdlServices.get_ledger_list()
 
     @api.doc('Returns information about a ledger, including its state and when it was created')
     @admin_token_required
