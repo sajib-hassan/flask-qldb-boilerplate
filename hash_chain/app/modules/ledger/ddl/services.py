@@ -50,14 +50,13 @@ class DdlServices(object):
             return fail_response('Unable to create the table. Please try again.', HTTPStatus.UNPROCESSABLE_ENTITY)
 
     @staticmethod
-    def create_table_index():
+    def create_table_index(ledger_name=None, table_name=None, index_attribute=None):
         """Create index on tables in a particular ledger."""
         logger.info('Creating index on all tables in a single transaction...')
         try:
-            data = get_requested_data()
-            with qldb.session(data["ledger_name"]) as session:
+            with qldb.session(ledger_name) as session:
                 session.execute_lambda(
-                    lambda x: DdlServices._create_table_index(x, data["table_name"], data["index_attribute"]),
+                    lambda x: DdlServices._create_table_index(x, table_name, index_attribute),
                     lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
                 logger.info('Index created successfully.')
                 return success_response('Index created successfully.', HTTPStatus.CREATED)

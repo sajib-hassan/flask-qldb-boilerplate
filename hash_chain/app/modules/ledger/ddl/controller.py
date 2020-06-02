@@ -132,4 +132,5 @@ class LedgerTableIndex(Resource):
     @api.response(int(HTTPStatus.UNPROCESSABLE_ENTITY), "Unable to create the index.")
     def post(self):
         """Create index on table in a particular ledger"""
-        return DdlServices.create_table_index()
+        args = table_index_create.parse_args(req=None, strict=False)
+        return DdlServices.create_table_index(**args)
