@@ -7,6 +7,7 @@ from flask_script import Manager
 
 from hash_chain.app import create_app
 from hash_chain.app.extensions import db
+from hash_chain.app.modules.ledger.qldb_migration.migration import Migration
 from hash_chain.app.modules.users.models import User
 
 app = create_app(os.getenv('HASH_CHAIN_ENV', 'development'))
@@ -77,6 +78,10 @@ def seed_users():
         admin=False
     )
     add_user_from_cli(data=_data)
+
+@manager.option('-d', '--direction', dest='direction', default='UP')
+def qldb_migrate(direction):
+    Migration().migrate(direction)
 
 
 if __name__ == '__main__':

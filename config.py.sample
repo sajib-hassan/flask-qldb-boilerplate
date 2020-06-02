@@ -78,7 +78,9 @@ class BaseConfig(object):
     # AWS QLDB Config
     # Constant values used throughout the ledger (QLDB).
 
-    LEDGER_NAME = "vehicle-registration"
+    LEDGER_NAME = "hashchain-dev"
+
+    HASH_TABLE_NAME = "document_hashes"
 
     VEHICLE_REGISTRATION_TABLE_NAME = "VehicleRegistration"
     VEHICLE_TABLE_NAME = "Vehicle"
@@ -98,6 +100,7 @@ class BaseConfig(object):
     RETRY_LIMIT = 4
 
     LEDGER_CREATION_POLL_PERIOD_SEC = 10
+    LEDGER_DELETION_POLL_PERIOD_SEC = 10
     ACTIVE_STATE = "ACTIVE"
 
 

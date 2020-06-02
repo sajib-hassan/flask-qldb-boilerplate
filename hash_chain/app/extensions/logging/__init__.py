@@ -5,7 +5,8 @@ Logging adapter
 """
 import logging
 
-logger = None
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class Logging(object):

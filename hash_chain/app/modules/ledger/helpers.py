@@ -51,7 +51,7 @@ def wait_for_active(ledger_name):
         sleep(config.LEDGER_CREATION_POLL_PERIOD_SEC)
 
 
-def wait_for_deleted(self, ledger_name):
+def wait_for_deleted(ledger_name):
     logger.info('Waiting for the ledger to be deleted...')
     while True:
         try:

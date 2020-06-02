@@ -36,4 +36,7 @@ tests:
 run:
 	python3 manage.py run
 
+qldb-migrate:
+	python3 manage.py qldb_migrate -d $(direction)
+
 all: clean install tests run

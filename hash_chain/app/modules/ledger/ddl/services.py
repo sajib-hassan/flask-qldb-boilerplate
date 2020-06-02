@@ -14,7 +14,7 @@ class DdlServices(object):
     def create_ledger(ledger_name):
         """Create a ledger and wait for it to be active."""
         try:
-            DdlServices._create_ledger(ledger_name)
+            DdlServices.do_create_ledger(ledger_name)
             wait_for_active(ledger_name)
             DdlServices.reset_ledgers()
             return success_response('Ledger is active and ready to use.', HTTPStatus.CREATED)
@@ -28,7 +28,7 @@ class DdlServices(object):
         """Create a Table"""
         try:
             with qldb.session(ledger_name) as session:
-                session.execute_lambda(lambda x: DdlServices._create_table(x, table_name),
+                session.execute_lambda(lambda x: DdlServices.do_create_table(x, table_name),
                                        lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
                 logger.info('Table created successfully.')
                 return success_response('Table created successfully.', HTTPStatus.CREATED)
@@ -41,7 +41,7 @@ class DdlServices(object):
         """Create a Table"""
         try:
             with qldb.session(ledger_name) as session:
-                session.execute_lambda(lambda x: DdlServices._drop_table(x, table_name),
+                session.execute_lambda(lambda x: DdlServices.do_drop_table(x, table_name),
                                        lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
                 logger.info('Table dropped successfully.')
                 return success_response('Table dropped successfully.', HTTPStatus.CREATED)
@@ -56,7 +56,7 @@ class DdlServices(object):
         try:
             with qldb.session(ledger_name) as session:
                 session.execute_lambda(
-                    lambda x: DdlServices._create_table_index(x, table_name, index_attribute),
+                    lambda x: DdlServices.do_create_table_index(x, table_name, index_attribute),
                     lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
                 logger.info('Index created successfully.')
                 return success_response('Index created successfully.', HTTPStatus.CREATED)
@@ -69,7 +69,7 @@ class DdlServices(object):
         """Delete a ledger."""
         try:
             set_deletion_protection(ledger_name, False)
-            DdlServices._delete_ledger(ledger_name)
+            DdlServices.do_delete_ledger(ledger_name)
             wait_for_deleted(ledger_name)
             DdlServices.reset_ledgers()
             return success_response('The ledger is successfully deleted.', HTTPStatus.ACCEPTED)
@@ -142,14 +142,14 @@ class DdlServices(object):
     # protected methods
 
     @staticmethod
-    def _create_ledger(name):
+    def do_create_ledger(name):
         logger.info("Let's create the ledger named: {}...".format(name))
         result = qldb.client().create_ledger(Name=name, PermissionsMode='ALLOW_ALL')
         logger.info('Success. Ledger state: {}.'.format(result.get('State')))
         return result
 
     @staticmethod
-    def _create_table(transaction_executor, table_name):
+    def do_create_table(transaction_executor, table_name):
         logger.info("Creating the '{}' table...".format(table_name))
         statement = 'CREATE TABLE {}'.format(table_name)
         cursor = transaction_executor.execute_statement(statement)
@@ -157,7 +157,7 @@ class DdlServices(object):
         return len(list(cursor))
 
     @staticmethod
-    def _drop_table(transaction_executor, table_name):
+    def do_drop_table(transaction_executor, table_name):
         logger.info("Drop the '{}' table...".format(table_name))
         statement = 'DROP TABLE {}'.format(table_name)
         cursor = transaction_executor.execute_statement(statement)
@@ -165,14 +165,14 @@ class DdlServices(object):
         return len(list(cursor))
 
     @staticmethod
-    def _create_table_index(transaction_executor, table_name, index_attribute):
+    def do_create_table_index(transaction_executor, table_name, index_attribute):
         logger.info("Creating index on '{}'...".format(index_attribute))
         statement = 'CREATE INDEX on {} ({})'.format(table_name, index_attribute)
         cursor = transaction_executor.execute_statement(statement)
         return len(list(cursor))
 
     @staticmethod
-    def _delete_ledger(ledger_name):
+    def do_delete_ledger(ledger_name):
         logger.info('Attempting to delete the ledger with name: {}...'.format(ledger_name))
         result = qldb.client().delete_ledger(Name=ledger_name)
         logger.info('Success.')
