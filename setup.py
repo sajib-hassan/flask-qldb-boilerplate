@@ -30,28 +30,30 @@ INSTALL_REQUIRES = [
     "Flask-Migrate==2.5.3",
     "flask-restx==0.2.0",
     "Flask-Script==2.0.6",
-    "Flask-SQLAlchemy==2.4.1",
+    "Flask-SQLAlchemy==2.4.3",
     "Flask-Testing==0.8.0",
-    "importlib-metadata==1.6.0",
+    "importlib-metadata==1.6.1",
     "itsdangerous==1.1.0",
     "Jinja2==2.11.2",
     "jsonschema==3.2.0",
-    "Mako==1.1.2",
+    "Mako==1.1.3",
     "MarkupSafe==1.1.1",
     "pycparser==2.20",
     "PyJWT==1.7.1",
     "pyrsistent==0.16.0",
     "python-dateutil==2.8.1",
+    "python-dotenv==0.13.0",
     "python-editor==1.0.4",
     "pytz==2020.1",
-    "six==1.14.0",
+    "six==1.15.0",
     "SQLAlchemy==1.3.17",
     "Werkzeug==0.16.1",
-    "zipp==3.1.0",
+    "zipp==3.1.0"
     'amazon.ion>=0.5.0,<0.6',
-    'boto3>=1.9.237,<2',
-    'botocore>=1.12.237,<2',
-    'pyqldb>=2.0.0,<3'
+    'boto3>=1.13.24,<2',
+    'botocore>=1.16.24,<2',
+    'pyqldb>=2.0.0,<3',
+    'pyion2json>=0.0.2'
 ]
 EXTRAS_REQUIRE = {
     "dev": [

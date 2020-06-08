@@ -1,6 +1,7 @@
 from amazon.ion.simple_types import IonPyBool, IonPyBytes, IonPyDecimal, IonPyDict, IonPyFloat, IonPyInt, IonPyList, \
     IonPyNull, IonPySymbol, IonPyText, IonPyTimestamp
 from amazon.ion.simpleion import dumps, loads
+from pyion2json import ion_cursor_to_json
 
 from hash_chain.app.extensions.logging import logger
 
@@ -96,3 +97,7 @@ def print_result(cursor):
         logger.info(dumps(row, binary=False, indent='  ', omit_version_marker=True))
         result_counter += 1
     return result_counter
+
+
+def parse_result(cursor):
+    return ion_cursor_to_json(cursor)

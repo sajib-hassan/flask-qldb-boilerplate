@@ -2,8 +2,7 @@ from http import HTTPStatus
 
 from hash_chain.app.extensions import qldb
 from hash_chain.app.extensions.logging import logger
-from hash_chain.app.modules.ledger.helpers import wait_for_active, set_deletion_protection, wait_for_deleted, \
-    get_requested_data
+from hash_chain.app.modules.ledger.helpers import wait_for_active, set_deletion_protection, wait_for_deleted
 from hash_chain.app.util import success_response, fail_response
 
 

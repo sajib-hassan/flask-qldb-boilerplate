@@ -1,10 +1,9 @@
-import logging
-
 from hash_chain.app.extensions import qldb
 from hash_chain.app.extensions.app_config import config
 from hash_chain.app.extensions.logging import logger
 from hash_chain.app.modules.ledger.ddl.services import DdlServices
 from hash_chain.app.modules.ledger.helpers import wait_for_active, set_deletion_protection, wait_for_deleted
+
 
 class Migration(object):
 
@@ -78,7 +77,6 @@ class Migration(object):
             session.execute_lambda(lambda x: DdlServices.do_drop_table(x, self.hash_table_name),
                                    lambda retry_attempt: logger.info('Retrying due to OCC conflict...'))
             logger.info('Table dropped successfully.')
-
 
     def ledger_exist(self):
         """

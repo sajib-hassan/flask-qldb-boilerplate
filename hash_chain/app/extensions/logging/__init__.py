@@ -48,4 +48,3 @@ class Logging(object):
         log_level = logging.DEBUG if app.debug else logging.INFO
         logger = logging.getLogger('hash_chain.app')
         logging.basicConfig(level=log_level)
-

@@ -11,6 +11,7 @@ from hash_chain.app.modules.ledger.parameters import table_name_parser_plain
 api = DmlDto.api
 
 table_name = table_name_parser_plain()
+table_name_args = table_name_parser_plain(location='args')
 
 
 @api.route('/documents')
@@ -29,13 +30,14 @@ class LedgerTableDocument(Resource):
     def post(self):
         """Insert documents into a table in a QLDB ledger."""
         args = table_name.parse_args(req=None, strict=False)
-        return DmlServices.do_insert_documents(**args)
+        return DmlServices.insert_documents(**args)
 
     @api.doc('Get documents from a table in a QLDB ledger.')
-    @api.expect(table_name, validate=True)
+    @api.expect(table_name_args, validate=True)
     @admin_token_required
     @api.response(int(HTTPStatus.CREATED), "Documents retrieved successfully.")
     @api.response(int(HTTPStatus.UNPROCESSABLE_ENTITY), "Unable to retrieve documents.")
     def get(self):
         """Retrieve documents from a table in a QLDB ledger."""
-        pass
+        args = table_name_args.parse_args(req=None, strict=False)
+        return DmlServices.get_table_data(**args)
